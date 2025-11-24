@@ -94,8 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load CSV + JSON
   // ---------------------------------------------------
   async function loadData() {
-    const csvPath = "/data/final_state_dataset.csv";
-    const jsonPath = "/data/election_presets.json";
+    const csvPath = "data/final_state_dataset.csv";
+    const jsonPath = "data/election_presets.json";
     try {
       const [csvData, jsonData] = await Promise.all([d3.csv(csvPath), d3.json(jsonPath)]);
       return { csvData, jsonData };
