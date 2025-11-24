@@ -1,0 +1,94 @@
+{
+  "2016": {
+    "race": {
+      "White": {"Dem": 0.39, "Rep": 0.61},
+      "Black": {"Dem": 0.89, "Rep": 0.11},
+      "Asian": {"Dem": 0.65, "Rep": 0.35},
+      "Two or more": {"Dem": 0.58, "Rep": 0.42},
+      "Other": {"Dem": 0.50, "Rep": 0.50}
+    },
+    "gender": {
+      "Male": {"Dem": 0.42, "Rep": 0.58},
+      "Female": {"Dem": 0.54, "Rep": 0.46}
+    },
+    "age": {
+      "18-29": {"Dem": 0.60, "Rep": 0.40},
+      "30-44": {"Dem": 0.50, "Rep": 0.50},
+      "45-64": {"Dem": 0.43, "Rep": 0.57},
+      "65+": {"Dem": 0.39, "Rep": 0.61}
+    },
+    "education": {
+      "HS or less": {"Dem": 0.39, "Rep": 0.61},
+      "Some college": {"Dem": 0.45, "Rep": 0.55},
+      "Associate": {"Dem": 0.48, "Rep": 0.52},
+      "Bachelor": {"Dem": 0.50, "Rep": 0.50},
+      "Graduate": {"Dem": 0.57, "Rep": 0.43}
+    },
+    "urban_rural": {
+      "Urban": {"Dem": 0.53, "Rep": 0.47},
+      "Rural": {"Dem": 0.33, "Rep": 0.67}
+    }
+  },
+
+  "2020": {
+    "race": {
+      "White": {"Dem": 0.42, "Rep": 0.58},
+      "Black": {"Dem": 0.87, "Rep": 0.13},
+      "Asian": {"Dem": 0.65, "Rep": 0.35},
+      "Two or more": {"Dem": 0.60, "Rep": 0.40},
+      "Other": {"Dem": 0.50, "Rep": 0.50}
+    },
+    "gender": {
+      "Male": {"Dem": 0.47, "Rep": 0.53},
+      "Female": {"Dem": 0.53, "Rep": 0.47}
+    },
+    "age": {
+      "18-29": {"Dem": 0.60, "Rep": 0.40},
+      "30-44": {"Dem": 0.53, "Rep": 0.47},
+      "45-64": {"Dem": 0.47, "Rep": 0.53},
+      "65+": {"Dem": 0.41, "Rep": 0.59}
+    },
+    "education": {
+      "HS or less": {"Dem": 0.40, "Rep": 0.60},
+      "Some college": {"Dem": 0.45, "Rep": 0.55},
+      "Associate": {"Dem": 0.49, "Rep": 0.51},
+      "Bachelor": {"Dem": 0.51, "Rep": 0.49},
+      "Graduate": {"Dem": 0.57, "Rep": 0.43}
+    },
+    "urban_rural": {
+      "Urban": {"Dem": 0.55, "Rep": 0.45},
+      "Rural": {"Dem": 0.34, "Rep": 0.66}
+    }
+  },
+
+  "2024": {
+    "race": {
+      "White": {"Dem": 0.40, "Rep": 0.60},
+      "Black": {"Dem": 0.86, "Rep": 0.14},
+      "Asian": {"Dem": 0.65, "Rep": 0.35},
+      "Two or more": {"Dem": 0.59, "Rep": 0.41},
+      "Other": {"Dem": 0.50, "Rep": 0.50}
+    },
+    "gender": {
+      "Male": {"Dem": 0.45, "Rep": 0.55},
+      "Female": {"Dem": 0.52, "Rep": 0.48}
+    },
+    "age": {
+      "18-29": {"Dem": 0.62, "Rep": 0.38},
+      "30-44": {"Dem": 0.52, "Rep": 0.48},
+      "45-64": {"Dem": 0.46, "Rep": 0.54},
+      "65+": {"Dem": 0.40, "Rep": 0.60}
+    },
+    "education": {
+      "HS or less": {"Dem": 0.39, "Rep": 0.61},
+      "Some college": {"Dem": 0.44, "Rep": 0.56},
+      "Associate": {"Dem": 0.48, "Rep": 0.52},
+      "Bachelor": {"Dem": 0.50, "Rep": 0.50},
+      "Graduate": {"Dem": 0.56, "Rep": 0.44}
+    },
+    "urban_rural": {
+      "Urban": {"Dem": 0.54, "Rep": 0.46},
+      "Rural": {"Dem": 0.33, "Rep": 0.67}
+    }
+  }
+}

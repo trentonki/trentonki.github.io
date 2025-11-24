@@ -1,0 +1,26 @@
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 18px;
+  color: #111;
+}
+
+h1 { margin-bottom: 8px; }
+.controls-row { display:flex; gap: 18px; align-items:center; margin-bottom: 12px; }
+.controls-row label { font-weight: 600; }
+
+.main-row { display:flex; gap: 24px; align-items:flex-start; }
+.panel { background: #fff; border: 1px solid #e0e0e0; padding: 12px; border-radius: 6px; }
+#sliders { width: 520px; max-height: 70vh; overflow:auto; }
+.slider-group { margin-bottom: 14px; }
+.slider-row { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.slider-row label { min-width:120px; font-size: 0.95rem; }
+input[type=range] { width:220px; }
+.slider-value { min-width:44px; text-align:right; font-weight:600; }
+
+#chart { width: 360px; text-align:center; }
+#pie { display:block; margin: 0 auto; }
+#legend { margin-top:10px; display:flex; gap:12px; justify-content:center; }
+.legend-item { display:flex; align-items:center; gap:6px; font-size:0.95rem; }
+.legend-color { width:14px; height:14px; border-radius:3px; display:inline-block; }
+
+#notes { margin-top:12px; color:#555; font-size:0.88rem; }

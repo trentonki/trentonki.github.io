@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>State Election Sim</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin: 18px; color:#111; }
+    h1 { margin-bottom: 6px; }
+    .controls { display:flex; gap:18px; align-items:center; margin-bottom:14px; }
+    .main { display:flex; gap:22px; align-items:flex-start; }
+    .panel { padding:12px; border:1px solid #e7e7e7; border-radius:6px; background:#fff; }
+    #sliders { width:560px; max-height:68vh; overflow:auto; }
+    .group { margin-bottom:12px; }
+    .group h4 { margin:6px 0; font-size:0.95rem; }
+    .row { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+    .row label { width:160px; font-size:0.92rem; }
+    input[type=range] { width:260px; }
+    .val { width:56px; text-align:right; font-weight:600; }
+    #chart { width:360px; text-align:center; }
+    #pie { display:block; margin:0 auto; }
+    .legend { margin-top:10px; display:flex; gap:12px; justify-content:center; }
+    .legend .sw { width:14px; height:14px; display:inline-block; border-radius:3px; margin-right:6px; }
+    .note { margin-top:10px; color:#555; font-size:0.88rem; }
+    .error { color:crimson; font-weight:600; }
+  </style>
+</head>
+<body>
+  <h1>State Election Sim</h1>
+
+  <div class="controls">
+    <div>
+      <label>Year:
+        <select id="yearSelect"></select>
+      </label>
+    </div>
+
+    <div>
+      <label>State:
+        <select id="stateSelect"></select>
+      </label>
+    </div>
+  </div>
+
+    <div id="sliders-info">
+        <strong>Note:</strong> Slider percentages represent votes pledged to Democrats. Preset figures reflect rough national averages.
+    </div>
+
+  <div class="main">
+    <div id="sliders" class="panel">
+    </div>
+
+    <div id="chart" class="panel">
+      <h3 id="chartTitle">Select a state</h3>
+      <svg id="pie" width="320" height="320"></svg>
+      <div id="legend" class="legend"></div>
+      <div id="status" class="note"></div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
