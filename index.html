@@ -24,6 +24,48 @@
     .legend .sw { width:14px; height:14px; display:inline-block; border-radius:3px; margin-right:6px; }
     .note { margin-top:10px; color:#555; font-size:0.88rem; }
     .error { color:crimson; font-weight:600; }
+
+    /* partisan gradient slider: blue → red */
+    input[type=range] {
+    -webkit-appearance: none;
+    background: linear-gradient(to right, #f03b20, #aaa, #2b8cbe); 
+    height: 6px;
+    border-radius: 4px;
+}
+
+/* remove default chrome track */
+input[type=range]::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+/* thumb (custom) */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #666;
+  border: 1px solid #444;
+  cursor: pointer;
+  margin-top: -5px;
+}
+
+/* Firefox support */
+input[type=range]::-moz-range-track {
+  background: linear-gradient(to right, #2b8cbe, #aaa, #f03b20);
+  height: 6px;
+  border-radius: 4px;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #666;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
@@ -43,9 +85,18 @@
     </div>
   </div>
 
-    <div id="sliders-info">
-        <strong>Note:</strong> Slider percentages represent votes pledged to Democrats. Preset figures reflect rough national averages.
-    </div>
+<div>
+  <strong>About this simulation:</strong>
+  <div class="info-tooltip">
+    This simulation lets you explore how different demographic groups affect state-level election outcomes. 
+    Sliders show voter lean (blue = Democrat, red = Republican). All calculations assume independence between groups.
+    Presets reflect national averages for 2016, 2020, and 2024.
+  </div>
+</div>
+
+
+
+
 
   <div class="main">
     <div id="sliders" class="panel">

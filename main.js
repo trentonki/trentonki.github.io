@@ -133,76 +133,123 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------------------------------------------------
   // Build UI
   // ---------------------------------------------------
-  function buildSlidersUI(year) {
-    slidersDiv.html("");
-    Object.keys(GROUPS).forEach(group => {
-      const box = slidersDiv.append("div").attr("class", "group");
-      box.append("h4").text(group.toUpperCase());
-      GROUPS[group].forEach(key => {
-        const row = box.append("div").attr("class", "row");
-        row.append("label").text(key);
+function buildSlidersUI(year) {
+  slidersDiv.html(""); // clear old sliders
 
-        const popSpan = row.append("span").attr("class", "poppct")
-          .style("min-width","70px").style("text-align","right");
+  Object.keys(GROUPS).forEach(group => {
+    const box = slidersDiv.append("div").attr("class", "group");
+    box.append("h4").text(group.toUpperCase());
 
-        const input = row.append("input")
-          .attr("type","range")
-          .attr("min", 0)
-          .attr("max", 1)
-          .attr("step", 0.01)
-          .attr("value", sliders[group][key])
-          .on("input", function() {
-            sliders[group][key] = Number(this.value);
-            row.select(".val").text(Math.round(Number(this.value)*100) + "%");
-            drawForSelected();
-          });
+    GROUPS[group].forEach(key => {
+      const row = box.append("div").attr("class", "row");
 
-        row.append("span")
-          .attr("class","val")
-          .text(Math.round(sliders[group][key]*100) + "%");
+      // Label with population placeholder
+      const labelSel = row.append("label").text(key);
+      const labelNode = labelSel.node();
 
-        input.node().__meta = { group, key, popSpan };
+      // Left (Dem) span
+      const leftSpan = row.append("span")
+        .attr("class", "left-val")
+        .style("width","36px")
+        .style("text-align","left")
+        .style("color","#2b8cbe"); // blue
+
+      // Slider input
+      const input = row.append("input")
+        .attr("type","range")
+        .attr("min",0)
+        .attr("max",1)
+        .attr("step",0.01)
+        .attr("value", sliders[group][key]);
+
+      // Right (Rep) span
+      const rightSpan = row.append("span")
+        .attr("class", "right-val")
+        .style("width","36px")
+        .style("text-align","right")
+        .style("color","#f03b20"); // red
+
+      // Store meta
+      input.node().__meta = { group, key, labelNode, leftSpan, rightSpan };
+
+      // Input handler
+      input.on("input", function() {
+      const val = Number(this.value);
+      sliders[group][key] = val;
+
+      leftSpan.text(Math.round(val*100)+"%");
+      rightSpan.text(Math.round((1-val)*100)+"%");
+
+      // Dot color
+      const r = Math.round( (1-val)*43 + val*240 );
+      const g = Math.round( (1-val)*140 + val*59 );
+      const b = Math.round( (1-val)*190 + val*32 );
+      this.style.setProperty("--thumb-color", `rgb(${r},${g},${b})`);
+
+      // Gradient 
+      const percent = val * 100;
+      this.style.background = `linear-gradient(to right, 
+        #2b8cbe 0%, 
+        #2b8cbe ${percent}%, 
+        #888 ${percent}%, 
+        #888 ${percent+0.1}%, 
+        #f03b20 ${percent+0.1}%, 
+        #f03b20 100%)`;
+
+        drawForSelected();
       });
+
+      // initialization
+      input.dispatch("input");
     });
-  }
+  });
+}
+
+
+
 
   // ---------------------------------------------------
   // Update population labels for sliders
   // ---------------------------------------------------
-  function updateSliderPopulationLabels(stateRow) {
-    slidersDiv.selectAll("input").each(function() {
-      const meta = this.__meta;
-      if (!meta) return;
-      const { key, popSpan } = meta;
+ function updateSliderPopulationLabels(stateRow) {
+  slidersDiv.selectAll("input").each(function() {
+    const meta = this.__meta;
+    if (!meta) return;
+    const { key, labelNode } = meta;
 
-      let pct = 0;
+    let pct = 0;
 
-      // gender special case
-      if (key === "Male" || key === "Female") {
-        const m = Number(stateRow["male_pop"]);
-        const f = Number(stateRow["female_pop"]);
-        if (Number.isFinite(m) && Number.isFinite(f) && (m+f)>0) {
-          pct = (key === "Male" ? m/(m+f) : f/(m+f));
-        }
-      } else {
-        const explicit = KEY_TO_COL[key];
-        const colSuffix = explicit ?? keyToColSuffix(key);
-        if (colSuffix) {
-          let raw = Number(stateRow[`pct_${colSuffix}`]);
-          if (Number.isFinite(raw)) {
-            if (raw > 1) raw = raw / 100;
-            pct = raw;
-          } else {
-            pct = 0;
-          }
+    // gender special case
+    if (key === "Male" || key === "Female") {
+      const m = Number(stateRow["male_pop"]);
+      const f = Number(stateRow["female_pop"]);
+      if (Number.isFinite(m) && Number.isFinite(f) && (m+f)>0) {
+        pct = (key === "Male" ? m/(m+f) : f/(m+f));
+      }
+    } else {
+      const explicit = KEY_TO_COL[key];
+      const colSuffix = explicit ?? keyToColSuffix(key);
+      if (colSuffix) {
+        let raw = Number(stateRow[`pct_${colSuffix}`]);
+        if (Number.isFinite(raw)) {
+          if (raw > 1) raw = raw / 100;
+          pct = raw;
         } else {
           pct = 0;
         }
+      } else {
+        pct = 0;
       }
+    }
 
-      d3.select(popSpan.node()).text(`pop ${(pct*100).toFixed(1)}%`);
-    });
-  }
+    const pctStr = (pct * 100).toFixed(1) + "%";
+
+    // Update the label DOM node safely: ex. "White (65.4%)"
+    if (labelNode && labelNode instanceof HTMLElement) {
+      d3.select(labelNode).text(`${key} (${pctStr})`);
+    }
+  });
+}
 
   // ---------------------------------------------------
   // Compute state Dem share with robust logging and fallbacks
@@ -266,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const demShare = totalPop > 0 ? (totalDem / totalPop) : 0.5;
 
-    // Debugging output (very helpful to find missing columns or mis-scaled pct)
+    // Debugging output
     console.debug("DEM DEBUG", {
       state: row.state_name,
       year,
@@ -277,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
       allSlidersAllOne: areAllSlidersOne()
     });
 
-    // If all slider values are exactly 1, demShare should be 1. If not, warn (helps catch missing pop)
+    // If all slider values are exactly 1, demShare should be 1. 
     if (areAllSlidersOne() && Math.abs(demShare - 1) > 1e-9) {
       console.warn(`DEM sanity check failed for ${row.state_name} ${year}: all sliders=1 but demShare=${demShare}. Check missing columns listed above.`);
     }
@@ -297,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------------------------------------------------
   function drawPie(demShare, stateName, year) {
     g.selectAll("*").remove();
-    chartTitle.text(`${stateName} — based on ${year}`);
+    chartTitle.text(`How ${stateName} Might Vote — ${year}`);
 
     const data = [{key:"Republican", value:1-demShare}, {key:"Democrat", value:demShare}];
 
@@ -341,9 +388,6 @@ document.addEventListener("DOMContentLoaded", () => {
     drawPie(dem, stateName, year);
   }
 
-  // pretty helper (unused in current code but kept)
-  function pretty(s) { return s.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase()); }
-
   // ---------------------------------------------------
   // Initialize
   // ---------------------------------------------------
@@ -365,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
       stateSelect.selectAll("option").data([""].concat(names)).join("option")
         .attr("value", d => d).text(d => d === "" ? "— Select a state —" : d);
 
-      // initialize sliders from presets (if presets exist)
+      // initialize sliders from presets
       const presY = presets?.[defaultYear] || {};
       Object.keys(GROUPS).forEach(group => GROUPS[group].forEach(key => {
         sliders[group][key] = normalizeEntry(presY[group]?.[key]).Dem;
@@ -385,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       stateSelect.on("change", drawForSelected);
 
-      // auto-select first state if none chosen (optional)
+      // auto-select first state if none chosen
       if (!stateSelect.property("value") && names.length) {
         stateSelect.property("value", names[0]);
       }

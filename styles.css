@@ -24,3 +24,38 @@ input[type=range] { width:220px; }
 .legend-color { width:14px; height:14px; border-radius:3px; display:inline-block; }
 
 #notes { margin-top:12px; color:#555; font-size:0.88rem; }
+
+input[type=range]::-webkit-slider-thumb {
+  background: var(--thumb-color, #666);
+}
+input[type=range]::-moz-range-thumb {
+  background: var(--thumb-color, #666);
+}
+input[type=range] {
+  -webkit-appearance: none;
+  width: 260px;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #2b8cbe 0%, #888 50%, #f03b20 100%);
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--thumb-color, #888);
+  cursor: pointer;
+  border: 1px solid #555;
+  margin-top: -4px; /* center the thumb */
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--thumb-color, #888);
+  border: 1px solid #555;
+  cursor: pointer;
+}
